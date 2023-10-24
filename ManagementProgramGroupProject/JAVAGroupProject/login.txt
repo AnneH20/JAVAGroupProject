@@ -6,3 +6,4 @@ test	test	Employer
 hardyhar	lol	Employee
 hannah	hannah	Employer
 evie	evie	Employee
+zaicha	zaicha	Employer
