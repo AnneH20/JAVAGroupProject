@@ -1,0 +1,10 @@
+/.metadata/
+./metadata/
+/metadata/
+**/metadata/*
+/ManagementProgramGroupProject/.metadata/.plugins/org.eclipse.core.resources/.safetable/org.eclipse.core.resources
+/ManagementProgramGroupProject/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+/ManagementProgramGroupProject/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+/ManagementProgramGroupProject/.metadata/version.ini
+/ManagementProgramGroupProject/.metadata/.plugins/org.eclipse.core.runtime/.settings/org.eclipse.jdt.ui.prefs
+/ManagementProgramGroupProject/.metadata/.log
