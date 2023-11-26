@@ -2,7 +2,7 @@ package javaGUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.FileWriter;
+import java.io.*;
 
 class SignUp extends JFrame {
     JTextField t1, t2;
@@ -115,6 +115,13 @@ class Employer extends JFrame{
                 s.setBounds(200, 200, 500, 300);
             }
         });
+        
+        b2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                // Code to remove employee from login.txt
+                removeEmployee();
+            }
+        });
 		
         b4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -126,6 +133,47 @@ class Employer extends JFrame{
             }
         });
 	}
+	
+	 private void removeEmployee() {
+	        String employeeToRemove = JOptionPane.showInputDialog("Enter the employee to be removed:");
+	        try {
+	            File inputFile = new File("login.txt");
+	            File tempFile = new File("temp.txt");
+
+	            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+	            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+	            String lineToRemove = employeeToRemove.trim(); // Adjust as per your file format/employee info
+
+	            String currentLine;
+	            while ((currentLine = reader.readLine()) != null) {
+	                // If the line does not contain the employee to be removed, write it to temp file
+	                if (!currentLine.trim().startsWith(lineToRemove)) {
+	                    writer.write(currentLine + System.getProperty("line.separator"));
+	                }
+	            }
+
+	            writer.close();
+	            reader.close();
+
+	            // Delete the original file
+	            if (inputFile.delete()) {
+	                // Rename the temp file to the original file name
+	                if (!tempFile.renameTo(inputFile)) {
+	                    System.out.println("Could not rename the file");
+	                }
+	            } else {
+	                System.out.println("Could not delete the file");
+	            }
+
+	            JFrame f = new JFrame();
+	            JOptionPane.showMessageDialog(f, "Employee Fired");
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	
     Login loginScreen;
     Employer(Login loginScreen){
     	this.loginScreen = loginScreen;
