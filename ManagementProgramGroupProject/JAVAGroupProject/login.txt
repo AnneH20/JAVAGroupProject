@@ -1,6 +1,5 @@
-anne	anne	Employer
 sarah	sarah	Employer
-mack	mack	Employee
+mack	mack	Employee	00:00:12
 test	test	Employee
 test	test	Employer
 hardyhar	lol	Employee

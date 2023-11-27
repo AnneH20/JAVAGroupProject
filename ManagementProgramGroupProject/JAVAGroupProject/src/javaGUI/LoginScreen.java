@@ -112,7 +112,7 @@ class Login extends JFrame {
                     if ("Employee".equals(userType)) {
                         // Open Employee page
                         dispose();
-                        Employee e = new Employee();
+                        Employee e = new Employee(username); // Pass the username
                         e.setBounds(400, 200, 400, 300);
                         e.setVisible(true);
                     } else if ("Employer".equals(userType)) {
