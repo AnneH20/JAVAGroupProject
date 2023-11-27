@@ -1,8 +1,10 @@
-sarah	sarah	Employer
-mack	mack	Employee	00:00:05	36.25
-test	test	Employee
-test	test	Employer
-hardyhar	lol	Employee
-hannah	hannah	Employer
-zaicha	zaicha	Employer
-evie	evie	Employer
+sarah	sarah	Employer	0.0
+mack	mack	Employee	12.0
+test	test	Employee	7.25
+test	test	Employer	0.0
+hardyhar	lol	Employee	1.0
+hannah	hannah	Employer	0.0
+zaicha	zaicha	Employer	0.0
+evie	evie	Employer	0.0
+anne	anne	Employee	7.5	00:00:07	52.50	
+

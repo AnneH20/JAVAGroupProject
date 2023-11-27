@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.regex.*;
+import java.util.Arrays;
 
 
 class Employee extends JFrame {
@@ -15,6 +16,7 @@ class Employee extends JFrame {
 
     Employee(String username) {
     	this.username = username;
+    	//this.payRate = payRate;
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         l1 = new JLabel("Employee View");
@@ -76,41 +78,90 @@ class Employee extends JFrame {
         clockLabel.setVisible(false);
     }
     
- // Method to write elapsed time to the login.txt file
+    
+    private double readPayRateFromFile() {
+        double payRate = 0.0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("login.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("\t");
+
+                // Check if the username matches and it is an employee or employer
+                if (parts.length > 0 && parts[0].equals(username)) {
+                    int payRateIndex = findPayRateIndex(parts);
+                    if (payRateIndex != -1) {
+                        payRate = Double.parseDouble(parts[payRateIndex]);
+                        break;
+                    }
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("readPayRateFromFile good");
+        return payRate;
+    }
+
+    // Helper method to find the index where the pay rate is stored, considering possible variations
+    private int findPayRateIndex(String[] parts) {
+        for (int i = 3; i < parts.length; i++) {
+            if (isNumeric(parts[i])) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
     private void writeElapsedTimeToFile() {
-        // Set the hourly rate
-        double hourlyRate = 7.25;
+        double hourlyRate = readPayRateFromFile();
+        String tempFileName = "login_temp.txt";
 
         try (BufferedReader reader = new BufferedReader(new FileReader("login.txt"));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("login_temp.txt"))) {
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFileName))) {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                // Split the line into parts using tabs
                 String[] parts = line.split("\t");
-
-                // Check if the username matches
-                if (parts.length > 0 && parts[0].equals(username)) {
-                    // Check if the user is an employee
-                    if (parts.length > 2 && "Employee".equals(parts[2])) {
-                        String existingElapsedTime = parts.length > 3 ? parts[3] : "00:00:00";
-
-                        // Calculate the total elapsed time
-                        long existingSeconds = getSecondsFromTime(existingElapsedTime);
-                        long newSeconds = getSecondsFromTime(clockLabel.getText());
-                        long totalSeconds = existingSeconds + newSeconds;
-
-                        // Calculate pay based on total seconds and hourly rate
-                        double pay = totalSeconds * hourlyRate;
-                        String totalElapsedTime = formatTimeFromSeconds(totalSeconds);
-
-                        // Replace the existing elapsed time and pay
-                        line = parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" +
-                                totalElapsedTime + "\t" + String.format("%.2f", pay);
-                    }
+                System.out.println("Processing line: " + Arrays.toString(parts));
+                System.out.println("Line: " + line);
+                System.out.println("Parts length: " + parts.length);
+                
+                if (parts.length < 7) {
+                    // Add empty elements to meet the condition
+                    parts = Arrays.copyOf(parts, 7);
+                    Arrays.fill(parts, 4, parts.length, "");  // Fill the added elements with empty strings
                 }
 
-                writer.write(line);
+                if (parts.length >= 6 && "Employee".equals(parts[2]) && username.equals(parts[0])) {
+	            	System.out.println("Found matching Employee: " + parts[0]);
+	                System.out.println("Existing UserType: " + parts[2]);
+	                System.out.println("Expected UserType: Employee");
+	                System.out.println("Existing Username: " + parts[0]);
+	                System.out.println("Expected Username: " + username);
+                	String existingElapsedTime = parts[4];
+
+                    System.out.println("Existing Elapsed Time before update: " + existingElapsedTime);
+
+                    long existingSeconds = getSecondsFromTime(existingElapsedTime);
+                    long newSeconds = getSecondsFromTime(clockLabel.getText());
+                    long totalSeconds = existingSeconds + newSeconds;
+
+                    double pay = (double) totalSeconds / 3600 * hourlyRate * 3600;
+                    String totalElapsedTime = formatTimeFromSeconds(totalSeconds);
+
+                    parts[4] = totalElapsedTime;
+                    parts[5] = String.format("%.2f", pay);
+
+                    String modifiedLine = String.join("\t", parts);
+                    System.out.println("Modified Line: " + modifiedLine);
+                    writer.write(modifiedLine);
+                }
+
+                else {
+                    writer.write(line);
+                }
                 writer.newLine();
             }
 
@@ -118,9 +169,8 @@ class Employee extends JFrame {
             e.printStackTrace();
         }
 
-        // Rename the temporary file to overwrite the original file
         File originalFile = new File("login.txt");
-        File tempFile = new File("login_temp.txt");
+        File tempFile = new File(tempFileName);
         if (tempFile.renameTo(originalFile)) {
             System.out.println("Elapsed time and pay updated successfully.");
         } else {
@@ -128,10 +178,51 @@ class Employee extends JFrame {
         }
     }
 
-    // Helper method to convert time in "HH:mm:ss" format to seconds
+
+    // Helper method to check if a string represents a valid time in "HH:mm:ss" format
+    private boolean isValidTime(String time) {
+        return time.matches("\\d{2}:\\d{2}:\\d{2}");
+    }
+
+
+
+    
+ // Helper method to check if a string is numeric
+    private boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+
+
+
+ // Helper method to convert time in "HH:mm:ss" format to seconds
     private long getSecondsFromTime(String time) {
-        String[] parts = time.split(":");
-        return Long.parseLong(parts[0]) * 3600 + Long.parseLong(parts[1]) * 60 + Long.parseLong(parts[2]);
+        try {
+            String[] parts = time.split(":");
+            if (parts.length == 3) {
+                int hours = Integer.parseInt(parts[0]);
+                int minutes = Integer.parseInt(parts[1]);
+                int seconds = Integer.parseInt(parts[2]);
+                
+                return hours * 3600 + minutes * 60 + seconds;
+            } 
+            
+            else {
+                // Handle invalid time format
+                //System.err.println("Invalid time format: " + time);
+                return 0;
+            }
+            
+        } catch (NumberFormatException e) {
+            // Handle the exception gracefully, return 0 if parsing fails
+            System.err.println("Error parsing time: " + time);
+            return 0;
+        }
     }
 
     // Helper method to format seconds to "HH:mm:ss" format

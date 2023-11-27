@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 
 class SignUp extends JFrame {
-    JTextField t1, t2;
+    JTextField t1, t2; // Add a text field for pay rate
     JButton b1;
     JLabel l1;
     JRadioButton employeeRadioButton, employerRadioButton;
@@ -13,8 +13,8 @@ class SignUp extends JFrame {
 
     SignUp() {
         setLayout(null);
-        setSize(400,300);
-        
+        setSize(400, 300);
+
         l1 = new JLabel("Hire");
         l1.setFont(new Font("Times New Roman", Font.BOLD, 30));
         l1.setForeground(Color.BLUE);
@@ -23,11 +23,13 @@ class SignUp extends JFrame {
 
         t1 = new JTextField(60);
         t2 = new JPasswordField(60);
+        //t3 = new JTextField(60); // Add a text field for pay rate
         b1 = new JButton("Submit");
 
         t1.setBounds(190, 60, 120, 30);
         t2.setBounds(190, 100, 120, 30);
-        b1.setBounds(210, 140, 80, 30);
+        //t3.setBounds(190, 140, 120, 30); // Set the position for pay rate field
+        b1.setBounds(210, 180, 80, 30);
 
         // Create radio buttons and a button group
         employeeRadioButton = new JRadioButton("Employee");
@@ -55,7 +57,9 @@ class SignUp extends JFrame {
 
                     // Check which radio button is selected and write to the same line
                     if (employeeRadioButton.isSelected()) {
-                        fw.write("\tEmployee\n");
+                        double hourlyRate = Double.parseDouble(JOptionPane.showInputDialog("Enter hourly rate:"));
+                        fw.write("\tEmployee");
+                        fw.write("\t" + hourlyRate + "\n");
                     } else if (employerRadioButton.isSelected()) {
                         fw.write("\tEmployer\n");
                     }
@@ -65,6 +69,7 @@ class SignUp extends JFrame {
                     JOptionPane.showMessageDialog(f, "Employee Hired");
                     dispose();
                 } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -76,6 +81,7 @@ class SignUp extends JFrame {
         add(employerRadioButton);
     }
 }
+
 
 class Employer extends JFrame{
 	JLabel l1;
