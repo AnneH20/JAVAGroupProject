@@ -1,5 +1,5 @@
 sarah	sarah	Employer
-mack	mack	Employee	00:00:12
+mack	mack	Employee	00:00:05	36.25
 test	test	Employee
 test	test	Employer
 hardyhar	lol	Employee

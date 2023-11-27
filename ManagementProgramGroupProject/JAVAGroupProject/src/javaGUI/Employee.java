@@ -11,7 +11,7 @@ class Employee extends JFrame {
     JButton b1, b2, b3, b4;
     long startTime, endTime;
     boolean clockedIn; //Flag to track if clocked in
-    private String username; // Add a field to store the username
+    String username; // Add a field to store the username
 
     Employee(String username) {
     	this.username = username;
@@ -76,7 +76,11 @@ class Employee extends JFrame {
         clockLabel.setVisible(false);
     }
     
+ // Method to write elapsed time to the login.txt file
     private void writeElapsedTimeToFile() {
+        // Set the hourly rate
+        double hourlyRate = 7.25;
+
         try (BufferedReader reader = new BufferedReader(new FileReader("login.txt"));
              BufferedWriter writer = new BufferedWriter(new FileWriter("login_temp.txt"))) {
 
@@ -87,9 +91,23 @@ class Employee extends JFrame {
 
                 // Check if the username matches
                 if (parts.length > 0 && parts[0].equals(username)) {
-                    String elapsedTime = clockLabel.getText();
-                    // Append the elapsed time after the existing information
-                    line += "\t" + elapsedTime;
+                    // Check if the user is an employee
+                    if (parts.length > 2 && "Employee".equals(parts[2])) {
+                        String existingElapsedTime = parts.length > 3 ? parts[3] : "00:00:00";
+
+                        // Calculate the total elapsed time
+                        long existingSeconds = getSecondsFromTime(existingElapsedTime);
+                        long newSeconds = getSecondsFromTime(clockLabel.getText());
+                        long totalSeconds = existingSeconds + newSeconds;
+
+                        // Calculate pay based on total seconds and hourly rate
+                        double pay = totalSeconds * hourlyRate;
+                        String totalElapsedTime = formatTimeFromSeconds(totalSeconds);
+
+                        // Replace the existing elapsed time and pay
+                        line = parts[0] + "\t" + parts[1] + "\t" + parts[2] + "\t" +
+                                totalElapsedTime + "\t" + String.format("%.2f", pay);
+                    }
                 }
 
                 writer.write(line);
@@ -104,11 +122,28 @@ class Employee extends JFrame {
         File originalFile = new File("login.txt");
         File tempFile = new File("login_temp.txt");
         if (tempFile.renameTo(originalFile)) {
-            System.out.println("Elapsed time updated successfully.");
+            System.out.println("Elapsed time and pay updated successfully.");
         } else {
-            System.out.println("Failed to update elapsed time.");
+            System.out.println("Failed to update elapsed time and pay.");
         }
     }
+
+    // Helper method to convert time in "HH:mm:ss" format to seconds
+    private long getSecondsFromTime(String time) {
+        String[] parts = time.split(":");
+        return Long.parseLong(parts[0]) * 3600 + Long.parseLong(parts[1]) * 60 + Long.parseLong(parts[2]);
+    }
+
+    // Helper method to format seconds to "HH:mm:ss" format
+    private String formatTimeFromSeconds(long seconds) {
+        int hours = (int) (seconds / 3600);
+        int minutes = (int) ((seconds % 3600) / 60);
+        int remainingSeconds = (int) (seconds % 60);
+        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds);
+    }
+
+
+
     
     // Method to update the clock label with elapsed time
     private void updateClock() {

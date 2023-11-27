@@ -93,7 +93,13 @@ class Login extends JFrame {
                     BufferedReader br = new BufferedReader(fr);
                     String line;
                     while ((line = br.readLine()) != null) {
-                        if (line.equals(username + "\t" + password + "\t" + userType)) {
+                        // Split the line into parts using tabs
+                        String[] parts = line.split("\t");
+
+                        // Check if the username and password match, and user type is correct
+                        if (parts.length > 0 && parts[0].equals(username)
+                                && parts.length > 1 && parts[1].equals(password)
+                                && parts.length > 2 && parts[2].equals(userType)) {
                             match = true;
                             break;
                         } else if (line.startsWith(username + "\t") && line.endsWith("\t" + userType)) {
