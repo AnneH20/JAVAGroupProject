@@ -128,6 +128,12 @@ class Employer extends JFrame{
                 removeEmployee();
             }
         });
+        
+        b3.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent ae) {
+        		displayInfo();
+        	}
+        });
 		
         b4.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
@@ -178,6 +184,40 @@ class Employer extends JFrame{
 	            e.printStackTrace();
 	        }
 	    }
+
+	 
+	 private void displayInfo() {
+		    try (BufferedReader reader = new BufferedReader(new FileReader("login.txt"))) {
+		        StringBuilder employeeInfo = new StringBuilder();
+
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            String[] parts = line.split("\t");
+
+		            // Check if the array has at least 4 elements before accessing indices
+		            if (parts.length >= 4 && "Employee".equals(parts[2])) {
+		                employeeInfo.append("Username: ").append(parts[0]).append("\n");
+		                employeeInfo.append("Role: ").append(parts[2]).append("\n");
+		                employeeInfo.append("Hourly Rate: ").append(parts[3]).append("\n");
+		            }
+
+		            // Check if parts[4] and parts[5] exist before appending
+		            if (parts.length >= 6) {
+		                employeeInfo.append("Hours: ").append(parts[4]).append("\n");
+		                employeeInfo.append("Total Pay: ").append(parts[5]).append("\n");
+		            }
+
+		            employeeInfo.append("\n"); // Add a separator between entries
+		        }
+
+		        // Display the information in a dialog
+		        JFrame infoFrame = new JFrame("Employee Information");
+		        JOptionPane.showMessageDialog(infoFrame, employeeInfo.toString(), "Employee Info", JOptionPane.INFORMATION_MESSAGE);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+
 
 	
     Login loginScreen;
