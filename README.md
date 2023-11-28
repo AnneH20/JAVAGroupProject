@@ -1,9 +1,9 @@
 # JAVAGroupProject
 
 To Use:
-1. Import project into Eclipse
-   a. Employee View:
-   	1. Clock In - starts real-time timer (1 second = 1 hour)
+* Import project into Eclipse
+* Employee View:
+* 	Clock In - starts real-time timer (1 second = 1 hour)
    	2. Clock Out - stops real-time timer (stores in login.txt file)
    	3. Log Out - logs out of account
    b. Employer View:
