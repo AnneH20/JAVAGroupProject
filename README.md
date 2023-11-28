@@ -2,7 +2,7 @@
 
 ## To Use: ##
 Employee View:
-* Clock In - starts real-time timer (1 second = 1 hour)
+* Clock In - starts a real-time timer (1 second = 1 hour)
 * Clock Out - stops real-time timer (stores in login.txt file)
 * Log Out - logs out of account
 Employer View:
