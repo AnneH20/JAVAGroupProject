@@ -1,4 +1,4 @@
-# JAVAGroupProject #
+# Group 4's Group Project for Advanced Languages (BIS 3523) #
 
 ## To Use: ##
 You must have all the requirements installed (especially if you are using the DATABASE version)
