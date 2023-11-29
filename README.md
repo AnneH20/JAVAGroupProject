@@ -34,6 +34,8 @@ Run the program as normal
 
 ## Requirements: ##
 1. XAMPP
-2. mysql-connector (mysql-connector-j-8.1.0.jar included)
-3. JAVA.sql (database included??)
-4. Eclipse
+   - Download at https://www.apachefriends.org/)
+3. mysql-connector (mysql-connector-j-8.1.0.jar included)
+   - Download at https://dev.mysql.com/downloads/connector/j/
+5. JAVA.sql (included)
+6. Eclipse
