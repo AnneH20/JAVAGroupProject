@@ -1,13 +1,13 @@
 # Group 4's Group Project for Advanced Languages (BIS 3523) #
 
 ## Requirements (IF USING the database version): ##
-1. XAMPP **DATABASE version ONLY)**
+1. XAMPP **(DATABASE version ONLY)**
    - Download at https://www.apachefriends.org/)
-3. mysql-connector **DATABASE version ONLY)**
+3. mysql-connector **(DATABASE version ONLY)**
    - Download at https://dev.mysql.com/downloads/connector/j/
    - Select "Platform Independent" and download the .zip file
-   - Extract the files from the .zip file
-5. JAVA.sql (included) **DATABASE version ONLY)**
+   - Extract the files from the .zip file (remember the location of this folder)
+5. JAVA.sql (included) **(DATABASE version ONLY)**
 6. Eclipse (with the Java JDK installed) 
 
 
