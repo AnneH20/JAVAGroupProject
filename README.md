@@ -3,26 +3,27 @@
 ## Requirements: ##
 1. XAMPP
    - Download at https://www.apachefriends.org/)
-3. mysql-connector (mysql-connector-j-8.1.0.jar included)
+3. mysql-connector
    - Download at https://dev.mysql.com/downloads/connector/j/
+   - Select "Platform Independent" and download the .zip file
+   - Extract the files from the .zip file
 5. JAVA.sql (included)
-6. Eclipse
+6. Eclipse (with the Java JDK installed) 
 
 
 ## To Use: ##
 You must have all the requirements installed (especially if you are using the DATABASE version)
 
 Open up XAMPP and make sure that mySQL **AND** Apache Web Server are **BOTH** running
+* On a web browser: type in http://localhost/phpmyadmin/ to get to the web server where you can view your database
+* There should be a JAVA.sql file where you can import that directly into the Apache Web Server from the site
 
 Open up workspace in Eclipse and import project (either JAVAGroupProject or JAVAGroupProject-DATABASE)
 
-If the mysql.jar file is not in the Referenced Libraries, add that by going to File -> Build Path -> (maybe Configure Build Path) --> Add External JARs
+If the mysql.jar file is not in the Referenced Libraries, add that by going to File -> Build Path -> Configure Build Path --> Libraries --> Click the mysql-connect.jar --> Edit (find the newly downloaded and
+extracted .jar file and replace the current .jar file
 
-On a web browser: type in http://localhost/phpmyadmin/ to get to the web server where you can view your database
-
-There should be a JAVA.sql file where you can import that directly into the web server
-
-Run the program as normal
+Toggle to LoginScreen.java and click Run
 
 **NOTE: There may be unforeseen issues with this code**
 
