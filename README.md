@@ -20,8 +20,8 @@ Open up XAMPP and make sure that mySQL **AND** Apache Web Server are **BOTH** ru
 
 Open up workspace in Eclipse and import project (either JAVAGroupProject or JAVAGroupProject-DATABASE)
 
-If the mysql.jar file is not in the Referenced Libraries, add that by going to File -> Build Path -> Configure Build Path --> Libraries --> Click the mysql-connect.jar --> Edit (find the newly downloaded and
-extracted .jar file and replace the current .jar file
+If the mysql.jar file is not in the Referenced Libraries, add that by going to File -> Build Path -> Configure Build Path --> Libraries --> 
+Click the mysql-connect.jar --> Edit (find the newly downloaded and extracted .jar file and replace the current .jar file --> Apply and Close
 
 Toggle to LoginScreen.java and click Run
 
