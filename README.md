@@ -1,5 +1,14 @@
 # Group 4's Group Project for Advanced Languages (BIS 3523) #
 
+## Requirements: ##
+1. XAMPP
+   - Download at https://www.apachefriends.org/)
+3. mysql-connector (mysql-connector-j-8.1.0.jar included)
+   - Download at https://dev.mysql.com/downloads/connector/j/
+5. JAVA.sql (included)
+6. Eclipse
+
+
 ## To Use: ##
 You must have all the requirements installed (especially if you are using the DATABASE version)
 
@@ -16,15 +25,6 @@ There should be a JAVA.sql file where you can import that directly into the web 
 Run the program as normal
 
 **NOTE: There may be unforeseen issues with this code**
-
-
-## Requirements: ##
-1. XAMPP
-   - Download at https://www.apachefriends.org/)
-3. mysql-connector (mysql-connector-j-8.1.0.jar included)
-   - Download at https://dev.mysql.com/downloads/connector/j/
-5. JAVA.sql (included)
-6. Eclipse
 
 
 ## The Program ##
