@@ -83,7 +83,7 @@ class DBConnection{
 
 	
 	public double getHourlyRate(String username) throws SQLException {
-	    double hourlyRate = 0.0;
+	    double hourlyRate = 0.00;
 
 	    try {
 	        String query = "SELECT HOURLYRATE FROM USERS WHERE USERNAME=?";
@@ -368,7 +368,7 @@ class Employer extends JFrame{
 		            }
 
 		            if (totalPay != 0) {
-		                employeeInfo.append("Total Pay: $").append(totalPay).append("\n");
+		            	employeeInfo.append("Total Pay: $").append(String.format("%.2f", totalPay)).append("\n");
 		            }
 
 		            employeeInfo.append("\n"); // Add a separator between entries
